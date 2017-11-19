@@ -18,14 +18,14 @@
 
 	<Loggers>
 		<Root level="warn">
-			<AppenderRef ref="socket" />
+			<AppenderRef ref="ConsoleAppender" />
 		</Root>
 		<logger name="api" level="INFO" additivity="false">
 			<AppenderRef ref="ConsoleAppender" />
 		</logger>
 		
 		<logger name="logstash" level="INFO" additivity="false">
-			<AppenderRef ref="socket" />
+			<AppenderRef ref="ConsoleAppender" />
 		</logger>
 
 		<logger name="db.neo4j" level="INFO" additivity="false">
