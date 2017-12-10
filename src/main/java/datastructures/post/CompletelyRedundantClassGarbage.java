@@ -1,5 +1,5 @@
 package datastructures.post;
 
-public class CompletelyRedundantClassGarbage2 {
-    
+public class CompletelyRedundantClassGarbage {
+    //wtf
 }
