@@ -95,12 +95,13 @@ public class MyNeo4jMapper {
 	}
 
 	// Latest version
-	public List<CompletePostDTO> getPostsNewLimit(int skip, int limit) {
+	public List<CompletePostDTO> getPostsLimitHeavy(int skip, int limit) {
 		Session s = connector.getSession();
 		if (limit >= 9999)
 			logger.warn("Very heavy request. Stop being a dick.");
 
-		StatementResult result = s.run(query.getPostsLimitNewQuery(skip, limit));
+		Long oneHourBack=System.currentTimeMillis()-(1000*60*60*60);
+		StatementResult result = s.run(query.getPostsLimitHeavyQuery(skip, limit,oneHourBack));
 
 		List<CompletePostDTO> completeList = new ArrayList<CompletePostDTO>();
 
@@ -117,6 +118,16 @@ public class MyNeo4jMapper {
 
 		s.close();
 		return completeList;
+	}
+	
+	public List<PostBody> getPostsLimit(int skip, int limit) {
+		Session s = connector.getSession();
+
+		StatementResult result = s.run(query.getPostsLimitQuery(skip,limit));
+		List<PostBody> list = util.castMultiplePostNodesToList(result);
+
+		s.close();
+		return list;
 	}
 
 	public List<PostBody> getPostsBySite(String site) {

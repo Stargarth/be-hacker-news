@@ -29,13 +29,22 @@ public class Neo4jQuery {
 		return "MATCH (post:Post) WHERE post.post_url CONTAINS {site} RETURN post order by post.timestamp desc";
 	}
 	
+	public String getPostsLimitQuery(Integer skip, Integer limit) {
+		return " Match (par:Post{post_parent:-1}) with par ORDER BY par.timestamp desc skip (30*"+skip+") limit "+limit+" return par";
+	}
+	// Match (par:Post{post_parent:-1}) where par.timestamp>1512916759 with par ORDER BY par.timestamp desc skip 60 limit 10 with par return par as post, size((par)-[:Parent *1..]->()) as numberOfcomments;;
+	// Match (par:Post{post_parent:-1}) return par skip (30*2) limit 10;
 	//Right One
-	public String getPostsLimitNewQuery(Integer skip, Integer limit) {
+	public String getPostsLimitHeavyQuery(Integer skip, Integer limit, Long timeLimit) {
 
-		return "Match (par:Post{post_parent:-1}) \n" + 
-				"       with par ORDER BY par.timestamp desc skip "+skip+" limit "+limit+"\n" + 
+		return "Match (par:Post{post_parent:-1}) where par.timestamp>"+timeLimit+" \n" + 
+				"       with par skip (30*"+skip+") limit "+limit+"\n" + 
 				"       with par\n" + 
 				"        return par as post, size((par)-[:Parent *1..]->()) as numberOfcomments;";
+//		return "Match (par:Post{post_parent:-1}) \n" + 
+//		"       with par ORDER BY par.timestamp desc skip (30*"+skip+") limit "+limit+"\n" + 
+//		"       with par\n" + 
+//		"        return par as post, size((par)-[:Parent *1..]->()) as numberOfcomments;";
 	}
 
 	public String addUserQuery() {

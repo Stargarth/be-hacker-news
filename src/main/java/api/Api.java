@@ -119,7 +119,27 @@ public class Api {
 		 */
 		int skip = limit * page;
 
-		List<CompletePostDTO> posts = mapper.getPostsNewLimit(skip, limit);
+		List<CompletePostDTO> posts = mapper.getPostsLimitHeavy(skip, limit);
+
+		String input = "{page: " + page + ", limit: " + limit + "}";
+		String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		checkSpeed(requestTimer.observeDuration(), methodName, input);
+		return posts;
+	}
+	
+	@RequestMapping(path = "/getPostsNoCount", method = RequestMethod.GET)
+	public List<PostBody> getPosts(@RequestParam(value = "page") int page,
+			@RequestParam(value = "limit") int limit) {
+		Summary.Timer requestTimer = StatusMonitor.getRequestlatency().startTimer();
+		StatusMonitor.incrementCounter();
+
+		/*
+		 * When page is 0, then we skip 0 posts. Otherwise we skip multiplicity of limit
+		 * posts (by default 30 posts are shown at once)
+		 */
+		int skip = limit * page;
+
+		List<PostBody> posts = mapper.getPostsLimit(skip, limit);
 
 		String input = "{page: " + page + ", limit: " + limit + "}";
 		String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
