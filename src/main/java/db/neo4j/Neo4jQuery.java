@@ -9,7 +9,8 @@ public class Neo4jQuery {
 				" post_type: {post_type}, \n" + 
 				" post_parent: {post_parent}, \n" + 
 				" username: {username}, \n" + 
-				" pwd_hash: {pwd_hash}, \n" + 
+				" pwd_hash: {pwd_hash}, \n" +
+				" karma: 0, \n" + 
 				" post_url: {post_url},"
 				+ "timestamp: {timestamp}})";
 	}
@@ -27,6 +28,14 @@ public class Neo4jQuery {
 	public String getPostsBySiteQuery() {
 
 		return "MATCH (post:Post) WHERE post.post_url CONTAINS {site} RETURN post order by post.timestamp desc";
+	}
+	
+	public String upVote(Integer hanesst_id) {
+		return "match (p:Post) where p.hanesst_id="+hanesst_id+" set p.karma=p.karma+1 ;";
+	}
+	
+	public String downVote(Integer hanesst_id) {
+		return "match (p:Post) where p.hanesst_id="+hanesst_id+" set p.karma=p.karma-1 ;";
 	}
 	
 	public String getPostsLimitQuery(Integer skip, Integer limit) {

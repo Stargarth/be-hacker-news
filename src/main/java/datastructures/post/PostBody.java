@@ -15,6 +15,7 @@ public class PostBody {
 	private Integer hanesst_id;
 	private String post_text;
 	private Long timestamp;
+	private Integer karma;
 
 	public PostBody(Node n) {
 		
@@ -37,11 +38,23 @@ public class PostBody {
 
 		setPost_url((String) resultMap.get("post_url"));
 		
+		setKarma((Integer)resultMap.get("karma"));
+		
+		
 		timestamp = Math.round((((Double) resultMap.get("timestamp"))));
 	}
 
 	public PostBody() {
 
+	}
+	
+
+	public Integer getKarma() {
+		return karma;
+	}
+
+	public void setKarma(Integer karma) {
+		this.karma = karma;
 	}
 
 	public String getUsername() {

@@ -146,6 +146,30 @@ public class Api {
 		checkSpeed(requestTimer.observeDuration(), methodName, input);
 		return posts;
 	}
+	
+	@RequestMapping(path = "/upVote", method = RequestMethod.POST)
+	public boolean upVote(@RequestParam(value = "hanesst_id") Integer hanesst_id) {
+		Summary.Timer requestTimer = StatusMonitor.getRequestlatency().startTimer();
+		StatusMonitor.incrementCounter();
+
+		mapper.upVote(hanesst_id);
+		
+		String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		checkSpeed(requestTimer.observeDuration(), methodName, hanesst_id);
+		return true;
+	}
+	
+	@RequestMapping(path = "/downVote", method = RequestMethod.POST)
+	public boolean downVote(@RequestParam(value = "hanesst_id") Integer hanesst_id) {
+		Summary.Timer requestTimer = StatusMonitor.getRequestlatency().startTimer();
+		StatusMonitor.incrementCounter();
+
+		mapper.downVote(hanesst_id);
+		
+		String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		checkSpeed(requestTimer.observeDuration(), methodName, hanesst_id);
+		return true;
+	}
 
 	@RequestMapping(path = "/from", method = RequestMethod.GET)
 	public List<PostBody> getPostsBySite(@RequestParam(value = "site") String site) {
