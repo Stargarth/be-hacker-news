@@ -120,6 +120,24 @@ public class MyNeo4jMapper {
 		return completeList;
 	}
 	
+	public void upVote(Integer hanesst_id) {
+		Session s = connector.getSession();
+
+		StatementResult result = s.run(query.upVote(hanesst_id));
+		//List<PostBody> list = util.castMultiplePostNodesToList(result);
+
+		s.close();
+	}
+	
+	public void downVote(Integer hanesst_id) {
+		Session s = connector.getSession();
+
+		StatementResult result = s.run(query.downVote(hanesst_id));
+		//List<PostBody> list = util.castMultiplePostNodesToList(result);
+
+		s.close();
+	}
+	
 	public List<PostBody> getPostsLimit(int skip, int limit) {
 		Session s = connector.getSession();
 
