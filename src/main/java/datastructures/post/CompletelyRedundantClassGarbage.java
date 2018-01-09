@@ -1,5 +1,7 @@
 package datastructures.post;
 
 public class CompletelyRedundantClassGarbage {
-    //wtf
+    private int i;
+    //wtf, hi
+    //hello
 }
